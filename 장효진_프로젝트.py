@@ -106,11 +106,18 @@ def kiosk():
 
     order = []
     while True:
-        choice = input("원하는 메뉴를 입력하세요 (다음을 입력하려면 '다음' 입력): ")
+        choice = input("원하는 샌드위치 메뉴를 입력하세요 (음료를 선택하려면 '음료' 입력): ")
         if choice in coffee_instance.C_menu() or choice in sandwich_instance.SW_menu():
             order.append(choice)
             print(f"{choice} 추가되었습니다.\n")
-        elif choice == "다음":
+        elif choice == "음료":
+            while True:
+                choice = input("원하는 음료 메뉴를 입력하세요 (토핑을 선택하려면 '토핑' 입력): ")
+                if choice in coffee_instance.C_menu() or choice in sandwich_instance.SW_menu():
+                    order.append(choice)
+                    print(f"{choice} 추가되었습니다.\n")
+                elif choice == "토핑":
+                    break
             break
         else:
             print("잘못된 선택입니다. 다시 시도하세요.")
@@ -119,11 +126,11 @@ def kiosk():
         print("음료에 추가할 토핑을 선택하세요:")
         toppings_list = []
         while True:
-            topping = input("추가할 토핑을 입력하세요 (펄, 휘핑크림, 초코칩, 설탕 중 선택, 다음을 입력하려면 '다음' 입력): ").strip().lower()
+            topping = input("추가할 토핑을 입력하세요 (펄, 휘핑크림, 초코칩, 설탕 중 선택, 계산을 하시려면 '계산' 입력): ").strip().lower()
             if topping in ["펄", "휘핑크림", "초코칩", "설탕"]:
                 toppings_list.append(topping)
                 print(f"{topping}이(가) 추가되었습니다.\n")
-            elif topping == "다음":
+            elif topping == "계산":
                 break
             else:
                 print("잘못된 선택입니다. 다시 시도하세요.")
@@ -135,10 +142,10 @@ def kiosk():
             print(f"- {item}")
         total = sum([coffee_instance.C_menu().get(item, 0) for item in order]) + sum([sandwich_instance.SW_menu().get(item, 0) for item in order]) + extra_charge
         print(f"\n추가된 토핑 금액: {extra_charge}원")
-        take_out = input("테이크아웃 하시겠습니까? (예/아니오): ").strip().lower()
+        take_out = input("테이크아웃 하시겠습니까? (테이크아웃 시 10%할인) (예/아니오): ").strip().lower()
         if take_out == "예":
             discounted_total = coffee_instance.take_out(total)
-            print(f"테이크아웃 할인 적용된 총 금액: {discounted_total:.0f}원")
+            print(f"테이크아웃 할인 10% 적용된 총 금액: {discounted_total:.0f}원")
         else:
             discounted_total = None
             print(f"총 금액: {total}원")
