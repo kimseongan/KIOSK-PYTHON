@@ -56,7 +56,8 @@ class Display:
             print(f"{item}: {price}원")
 
 def write_receipt(order, toppings_list, total, discounted):
-    with open("receipt.txt", "w", encoding="utf-8") as f:
+    receipt_path = "receipt.txt"
+    with open(receipt_path, "w", encoding="utf-8") as f:
         f.write("<<<<<<<<<<<영수증>>>>>>>>>>>>>>>>\n")
         f.write(f"주문 날짜/시간: {time.strftime('%Y-%m-%d %H:%M:%S')}\n\n")
         f.write("주문 내역:\n")
@@ -69,6 +70,9 @@ def write_receipt(order, toppings_list, total, discounted):
         f.write(f"\n총 금액: {total}원\n")
         if discounted:
             f.write(f"할인 적용된 총 금액: {discounted:.0f}원\n")
+
+    # 메모장으로 영수증 파일 실행
+    os.system(f"notepad.exe {receipt_path}")
 
 def kiosk():
     coffee_instance = Discount()
