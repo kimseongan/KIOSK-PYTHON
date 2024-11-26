@@ -129,7 +129,7 @@ def kiosk():
         print("주문이 완료되었습니다:")
         for item in order:
             print(f"- {item}")
-        total = sum([coffee_instance.C_menu().get(item, 0) for item in order]) + extra_charge
+        total = sum([coffee_instance.C_menu().get(item, 0) for item in order]) + sum([sandwich_instance.SW_menu().get(item, 0) for item in order]) + extra_charge
         print(f"\n추가된 토핑 금액: {extra_charge}원")
         take_out = input("테이크아웃 하시겠습니까? (예/아니오): ").strip().lower()
         if take_out == "예":
